@@ -2,6 +2,7 @@ return {
 	'neovim/nvim-lspconfig',
 	config = function()
 		local lspconfig = require('lspconfig')
+		-- go install golang.org/x/tools/gopls@latest
 		-- https://cs.opensource.google/go/x/tools/+/refs/tags/gopls/v0.15.3:gopls/doc/vim.md
 		lspconfig.gopls.setup({
 			settings = {
@@ -38,6 +39,7 @@ return {
 			end
 		})
 
+		-- npm i -g pyright
 		lspconfig.pyright.setup{}
 	end,
 }
