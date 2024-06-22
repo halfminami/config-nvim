@@ -13,8 +13,7 @@ local function my_on_attach(bufnr)
   api.config.mappings.default_on_attach(bufnr)
 
   -- custom mappings
-  -- CTRL-SHIFT-e
-  vim.api.nvim_set_keymap('n', '<C-E>',     '<cmd>NvimTreeOpen<CR>', {noremap = true})
+  -- vim.api.nvim_set_keymap('n', '<C-E>',     '<cmd>NvimTreeOpen<CR>', {noremap = true})
 end
 
 return {
