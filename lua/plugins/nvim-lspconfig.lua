@@ -73,6 +73,12 @@ return {
 				vim.lsp.buf.format({async = false})
 			end
 		})
+
+		-- rename; then C-F to edit in command window
+		vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
+		-- using lsp go to definition
+		vim.keymap.set("n", "gD", vim.lsp.buf.definition)
+
 	end,
 }
 
