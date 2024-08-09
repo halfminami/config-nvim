@@ -23,10 +23,6 @@ return {
   dependencies = {
     "nvim-tree/nvim-web-devicons",
   },
-  config = function()
-    require("nvim-tree").setup {
-      on_attach = my_on_attach,
-    }
-  end,
+  opts = {on_attach = my_on_attach},
 }
 
