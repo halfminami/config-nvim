@@ -41,6 +41,38 @@ return {
 
 		-- npm i -g pyright
 		lspconfig.pyright.setup{}
+
+		-- https://rust-analyzer.github.io/manual.html#installation
+		lspconfig.rust_analyzer.setup({
+			on_attach = function(client, bufnr)
+				vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+			end,
+			settings = {
+        			["rust-analyzer"] = {
+        			    imports = {
+        			        granularity = {
+        			            group = "module",
+        			        },
+        			        prefix = "self",
+        			    },
+        			    cargo = {
+        			        buildScripts = {
+        			            enable = true,
+        			        },
+        			    },
+        			    procMacro = {
+        			        enable = true
+        			    },
+        			}
+    			}
+		})
+
+		vim.api.nvim_create_autocmd("BufWritePre", {
+			pattern = "*.rs",
+			callback = function()
+				vim.lsp.buf.format({async = false})
+			end
+		})
 	end,
 }
 
