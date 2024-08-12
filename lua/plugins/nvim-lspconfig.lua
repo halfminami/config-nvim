@@ -2,6 +2,8 @@ return {
 	'neovim/nvim-lspconfig',
 	config = function()
 		local lspconfig = require('lspconfig')
+		-- local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
 		-- go install golang.org/x/tools/gopls@latest
 		-- https://cs.opensource.google/go/x/tools/+/refs/tags/gopls/v0.15.3:gopls/doc/vim.md
 		lspconfig.gopls.setup({
@@ -48,23 +50,24 @@ return {
 				vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 			end,
 			settings = {
-        			["rust-analyzer"] = {
-        			    imports = {
-        			        granularity = {
-        			            group = "module",
-        			        },
-        			        prefix = "self",
-        			    },
-        			    cargo = {
-        			        buildScripts = {
-        			            enable = true,
-        			        },
-        			    },
-        			    procMacro = {
-        			        enable = true
-        			    },
-        			}
-    			}
+		      			["rust-analyzer"] = {
+		      			    imports = {
+		      			        granularity = {
+		      			            group = "module",
+		      			        },
+		      			        prefix = "self",
+		      			    },
+		      			    cargo = {
+		      			        buildScripts = {
+		      			            enable = true,
+		      			        },
+		      			    },
+		      			    procMacro = {
+		      			        enable = true
+		      			    },
+					    -- capabilities = capabilities,
+		      			}
+		  		}
 		})
 
 		vim.api.nvim_create_autocmd("BufWritePre", {
@@ -74,10 +77,42 @@ return {
 			end
 		})
 
+		-- apt
+		lspconfig.clangd.setup{}
+
+		-- keymaps
+		-- most of them are copied from metals example
+		-- diagnostic (warnings, error, ...)
+        	vim.keymap.set("n", "<leader>ae", function()
+        	  vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.ERROR })
+        	end)
+        	vim.keymap.set("n", "<leader>aw", function()
+        	  vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.WARN })
+        	end)
+        	vim.keymap.set("n", "<leader>ah", function()
+        	  vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.HINT })
+        	end)
+        	vim.keymap.set("n", "<leader>ai", function()
+        	  vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.INFO })
+        	end)
+        	vim.keymap.set("n", "<leader>all", function()
+        	  vim.diagnostic.setqflist({ severity = {
+			vim.diagnostic.severity.ERROR,
+			vim.diagnostic.severity.WARN,
+			vim.diagnostic.severity.HINT,
+			vim.diagnostic.severity.INFO,
+		  } })
+        	end)
 		-- rename; then C-F to edit in command window
-		vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
+		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
+		-- format
+		vim.keymap.set("n", "<leader>fmt", function()
+		  vim.lsp.buf.format({async = false})
+		end)
 		-- using lsp go to definition
 		vim.keymap.set("n", "gD", vim.lsp.buf.definition)
+
+		-- vim.lsp.set_log_level("debug")
 
 	end,
 }
