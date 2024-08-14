@@ -1,8 +1,9 @@
 vim.opt.undofile = true
 
--- line numbers
+-- lines
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.wrap = false
 
 -- incremental search
 vim.opt.is = true
