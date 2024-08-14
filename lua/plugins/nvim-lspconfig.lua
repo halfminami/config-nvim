@@ -80,29 +80,29 @@ return {
 		-- apt
 		lspconfig.clangd.setup{}
 
-		-- keymaps
-		-- most of them are copied from metals example
-		-- diagnostic (warnings, error, ...)
-        	vim.keymap.set("n", "<leader>ae", function()
-        	  vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.ERROR })
-        	end)
-        	vim.keymap.set("n", "<leader>aw", function()
-        	  vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.WARN })
-        	end)
-        	vim.keymap.set("n", "<leader>ah", function()
-        	  vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.HINT })
-        	end)
-        	vim.keymap.set("n", "<leader>ai", function()
-        	  vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.INFO })
-        	end)
-        	vim.keymap.set("n", "<leader>all", function()
-        	  vim.diagnostic.setqflist({ severity = {
-			vim.diagnostic.severity.ERROR,
-			vim.diagnostic.severity.WARN,
-			vim.diagnostic.severity.HINT,
-			vim.diagnostic.severity.INFO,
-		  } })
-        	end)
+		-- -- keymaps
+		-- -- most of them are copied from metals example
+		-- -- diagnostic (warnings, error, ...)
+		--       	vim.keymap.set("n", "<leader>ae", function()
+		--       	  vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.ERROR })
+		--       	end)
+		--       	vim.keymap.set("n", "<leader>aw", function()
+		--       	  vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.WARN })
+		--       	end)
+		--       	vim.keymap.set("n", "<leader>ah", function()
+		--       	  vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.HINT })
+		--       	end)
+		--       	vim.keymap.set("n", "<leader>ai", function()
+		--       	  vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.INFO })
+		--       	end)
+		--       	vim.keymap.set("n", "<leader>all", function()
+		--       	  vim.diagnostic.setqflist({ severity = {
+		-- 	vim.diagnostic.severity.ERROR,
+		-- 	vim.diagnostic.severity.WARN,
+		-- 	vim.diagnostic.severity.HINT,
+		-- 	vim.diagnostic.severity.INFO,
+		--   } })
+        	-- end)
 		-- rename; then C-F to edit in command window
 		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
 		-- format
