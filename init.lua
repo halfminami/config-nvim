@@ -7,4 +7,3 @@ require('custom.key')
 require('custom.lazy')
 
 require('custom.opt')
-

@@ -8,4 +8,3 @@ return {
 		vim.cmd([[colorscheme codedark]])
 	end,
 }
-
