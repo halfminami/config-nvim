@@ -1,12 +1,39 @@
 return {
 	'neovim/nvim-lspconfig',
+	dependencies = {
+		{"williamboman/mason.nvim", config=function()end},
+		{"williamboman/mason-lspconfig.nvim", config=function()end},
+	},
 	config = function()
-		local lspconfig = require('lspconfig')
-		-- local capabilities = require("cmp_nvim_lsp").default_capabilities()
+		-- call order matters
+		require("mason").setup()
+		local mason_lspconfig = require("mason-lspconfig")
+		mason_lspconfig.setup({})
+
+		mason_lspconfig.setup_handlers({
+           			function (server_name) -- default handler (optional)
+           			    require("lspconfig")[server_name].setup {
+					    capabilities = require("cmp_nvim_lsp").default_capabilities()
+				    }
+           			end,
+				["gopls"] = function()
+				end,
+				["rust_analyzer"] = function()
+				end,
+				["harper_ls"] = function()
+           			    require("lspconfig").harper_ls.setup {
+					    settings = {
+						    ["harper-ls"] = {
+							linters ={sentence_capitalization=false}
+						    }
+					    }
+				    }
+				end,
+			})
 
 		-- go install golang.org/x/tools/gopls@latest
 		-- https://cs.opensource.google/go/x/tools/+/refs/tags/gopls/v0.15.3:gopls/doc/vim.md
-		lspconfig.gopls.setup({
+		require("lspconfig").gopls.setup({
 			settings = {
 				gopls = {
 					analyses = {
@@ -16,6 +43,7 @@ return {
 					gofumpt = true,
 				},
 			},
+			capabilities = require("cmp_nvim_lsp").default_capabilities(),
 		})
 
 		vim.api.nvim_create_autocmd("BufWritePre", {
@@ -41,11 +69,8 @@ return {
 			end
 		})
 
-		-- npm i -g pyright
-		lspconfig.pyright.setup{}
-
 		-- https://rust-analyzer.github.io/manual.html#installation
-		lspconfig.rust_analyzer.setup({
+		require("lspconfig").rust_analyzer.setup({
 			on_attach = function(client, bufnr)
 				vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 			end,
@@ -65,9 +90,9 @@ return {
 		      			    procMacro = {
 		      			        enable = true
 		      			    },
-					    -- capabilities = capabilities,
 		      			}
-		  		}
+		  		},
+			capabilities = require("cmp_nvim_lsp").default_capabilities(),
 		})
 
 		vim.api.nvim_create_autocmd("BufWritePre", {
@@ -77,32 +102,6 @@ return {
 			end
 		})
 
-		-- apt
-		lspconfig.clangd.setup{}
-
-		-- -- keymaps
-		-- -- most of them are copied from metals example
-		-- -- diagnostic (warnings, error, ...)
-		--       	vim.keymap.set("n", "<leader>ae", function()
-		--       	  vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.ERROR })
-		--       	end)
-		--       	vim.keymap.set("n", "<leader>aw", function()
-		--       	  vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.WARN })
-		--       	end)
-		--       	vim.keymap.set("n", "<leader>ah", function()
-		--       	  vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.HINT })
-		--       	end)
-		--       	vim.keymap.set("n", "<leader>ai", function()
-		--       	  vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.INFO })
-		--       	end)
-		--       	vim.keymap.set("n", "<leader>all", function()
-		--       	  vim.diagnostic.setqflist({ severity = {
-		-- 	vim.diagnostic.severity.ERROR,
-		-- 	vim.diagnostic.severity.WARN,
-		-- 	vim.diagnostic.severity.HINT,
-		-- 	vim.diagnostic.severity.INFO,
-		--   } })
-        	-- end)
 		-- rename; then C-F to edit in command window
 		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
 		-- format
