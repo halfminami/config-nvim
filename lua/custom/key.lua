@@ -9,7 +9,12 @@ vim.keymap.set('n', '<C-Left>', "F lgUlh", { noremap = true, desc = 'title case 
 
 vim.keymap.set('n', '<leader>trm', '<cmd>botright 10 new +term<cr>', { noremap = true, desc = 'terminal' })
 
+-- vim.keymap.set('x', 'hello', function()
+-- 	vim.print(vim.fn.getregion(vim.fn.getpos('v'), vim.fn.getpos('.'), { type = vim.fn.mode() }))
+-- end)
+
 -- auto closing
+-- TODO: string format
 local opens = {
 	{ '{',     '{}<left>' },
 	{ '[',     '[]<left>' },
@@ -26,4 +31,16 @@ for _, item in ipairs(opens) do
 		noremap = true,
 		desc = string.format('auto closing for "%s"', item[1]),
 	})
+end
+
+local wraps = {
+	{ '<leader>{', 'c{}<esc>P' },
+	{ '<leader>[', 'c[]<esc>P' },
+	{ '<leader>(', 'c()<esc>P' },
+	{ "<leader>'", "c''<esc>P" },
+	{ '<leader>"', 'c""<esc>P' },
+	{ '<leader><', 'c<lt>><esc>P' },
+}
+for _, item in ipairs(wraps) do
+	vim.keymap.set('x', item[1], item[2], { noremap = true, desc = 'wrap text' })
 end
