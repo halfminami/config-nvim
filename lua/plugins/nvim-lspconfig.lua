@@ -104,14 +104,28 @@ return {
 			end
 		})
 
+		require('lspconfig').ocamllsp.setup({
+			capabilities = require("cmp_nvim_lsp").default_capabilities(),
+		})
+
+		require('lspconfig').biome.setup({
+			capabilities = require("cmp_nvim_lsp").default_capabilities(),
+		})
+
 		-- rename; then C-F to edit in command window
 		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
 		-- format
 		vim.keymap.set("n", "<leader>fmt", function()
-			vim.lsp.buf.format({ async = false })
+			-- vim.lsp.buf.format({ async = false })
+			-- Never request typescript-language-server for formatting
+			vim.lsp.buf.format {
+				filter = function(client) return client.name ~= "tsserver" end,
+				async = false,
+			}
 		end)
 		-- using lsp go to definition
 		vim.keymap.set("n", "gD", vim.lsp.buf.definition)
+		vim.keymap.set("n", "K", vim.lsp.buf.hover)
 
 		-- vim.lsp.set_log_level("debug")
 	end,
