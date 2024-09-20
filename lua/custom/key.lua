@@ -7,6 +7,9 @@ vim.keymap.set('n', '<F2>t', "i<C-R>=strftime('%F %T')<CR><CR><Esc>", { noremap 
 vim.keymap.set('n', '<C-Right>', "gUlw", { noremap = true, desc = 'title case forward' })
 vim.keymap.set('n', '<C-Left>', "F lgUlh", { noremap = true, desc = 'title case backward' })
 
+vim.keymap.set('n', '<M-Up>', "<cmd>:m -2<cr>", { noremap = true, desc = 'move up current line by 1' })
+vim.keymap.set('n', '<M-Down>', "<cmd>:m +1<cr>", { noremap = true, desc = 'move down current line by 1' })
+
 vim.keymap.set('n', '<leader>trm', '<cmd>botright 10 new +term<cr>', { noremap = true, desc = 'terminal' })
 
 -- vim.keymap.set('x', 'hello', function()

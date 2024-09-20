@@ -119,7 +119,7 @@ return {
 			-- vim.lsp.buf.format({ async = false })
 			-- Never request typescript-language-server for formatting
 			vim.lsp.buf.format {
-				filter = function(client) return client.name ~= "tsserver" end,
+				filter = function(client) return client.name ~= "ts_ls" and client.name ~= "tsserver" end,
 				async = false,
 			}
 		end)
