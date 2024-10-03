@@ -3,6 +3,7 @@ return {
 	dependencies = {
 		{ "williamboman/mason.nvim",           config = function() end },
 		{ "williamboman/mason-lspconfig.nvim", config = function() end },
+		"antosha417/nvim-lsp-file-operations",
 	},
 	config = function()
 		-- call order matters
@@ -10,10 +11,14 @@ return {
 		local mason_lspconfig = require("mason-lspconfig")
 		mason_lspconfig.setup({})
 
+		local default_capabilities = vim.tbl_deep_extend("force",
+			require('lsp-file-operations').default_capabilities(),
+			require("cmp_nvim_lsp").default_capabilities())
+
 		mason_lspconfig.setup_handlers({
 			function(server_name) -- default handler (optional)
 				require("lspconfig")[server_name].setup {
-					capabilities = require("cmp_nvim_lsp").default_capabilities()
+					capabilities = default_capabilities
 				}
 			end,
 			["gopls"] = function()
@@ -44,7 +49,7 @@ return {
 					gofumpt = true,
 				},
 			},
-			capabilities = require("cmp_nvim_lsp").default_capabilities(),
+			capabilities = default_capabilities,
 		})
 
 		vim.api.nvim_create_autocmd("BufWritePre", {
@@ -94,7 +99,7 @@ return {
 					},
 				}
 			},
-			capabilities = require("cmp_nvim_lsp").default_capabilities(),
+			capabilities = default_capabilities,
 		})
 
 		vim.api.nvim_create_autocmd("BufWritePre", {
@@ -105,11 +110,11 @@ return {
 		})
 
 		require('lspconfig').ocamllsp.setup({
-			capabilities = require("cmp_nvim_lsp").default_capabilities(),
+			capabilities = default_capabilities,
 		})
 
 		require('lspconfig').biome.setup({
-			capabilities = require("cmp_nvim_lsp").default_capabilities(),
+			capabilities = default_capabilities,
 		})
 
 		-- rename; then C-F to edit in command window

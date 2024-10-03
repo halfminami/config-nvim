@@ -16,6 +16,8 @@ vim.keymap.set('n', '<leader>trm', '<cmd>botright 10 new +term<cr>', { noremap =
 -- 	vim.print(vim.fn.getregion(vim.fn.getpos('v'), vim.fn.getpos('.'), { type = vim.fn.mode() }))
 -- end)
 
+vim.keymap.set('n', '<leader>psc', 'f_a<bs><esc>lgUl', { noremap = true, desc = 'one PascalCase' })
+
 -- auto closing
 -- TODO: string format
 local opens = {
