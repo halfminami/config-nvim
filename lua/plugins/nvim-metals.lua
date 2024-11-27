@@ -109,6 +109,8 @@ return {
       metals_config.settings = {
         showImplicitArguments = true,
         excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
+	-- chokes on JAVA_HOME not 17
+	serverVersion = "1.3.5",
       }
 
       -- *READ THIS*
