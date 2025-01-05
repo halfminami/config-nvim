@@ -1,3 +1,6 @@
+vim.cmd("let $LANG = 'en'")
+-- vim.cmd("language en_US")
+
 vim.opt.undofile = true
 
 -- lines
