@@ -4,6 +4,10 @@ return {
 		{ "williamboman/mason.nvim",           config = function() end },
 		{ "williamboman/mason-lspconfig.nvim", config = function() end },
 		"antosha417/nvim-lsp-file-operations",
+		{
+			"j-hui/fidget.nvim",
+			opts = {},
+		}
 	},
 	config = function()
 		-- call order matters
@@ -15,27 +19,28 @@ return {
 			require('lsp-file-operations').default_capabilities(),
 			require("cmp_nvim_lsp").default_capabilities())
 
-		mason_lspconfig.setup_handlers({
-			function(server_name) -- default handler (optional)
-				require("lspconfig")[server_name].setup {
-					capabilities = default_capabilities
-				}
-			end,
-			["gopls"] = function()
-			end,
-			["rust_analyzer"] = function()
-			end,
-			["harper_ls"] = function()
-				require("lspconfig").harper_ls.setup {
-					settings = {
-						["harper-ls"] = {
-							linters = { sentence_capitalization = false }
-						}
-					},
-					autostart = false,
-				}
-			end,
-		})
+		-- to v2
+		-- mason_lspconfig.setup_handlers({
+		-- 	function(server_name) -- default handler (optional)
+		-- 		require("lspconfig")[server_name].setup {
+		-- 			capabilities = default_capabilities
+		-- 		}
+		-- 	end,
+		-- 	["gopls"] = function()
+		-- 	end,
+		-- 	["rust_analyzer"] = function()
+		-- 	end,
+		-- 	["harper_ls"] = function()
+		-- 		require("lspconfig").harper_ls.setup {
+		-- 			settings = {
+		-- 				["harper-ls"] = {
+		-- 					linters = { sentence_capitalization = false }
+		-- 				}
+		-- 			},
+		-- 			autostart = false,
+		-- 		}
+		-- 	end,
+		-- })
 
 		-- go install golang.org/x/tools/gopls@latest
 		-- https://cs.opensource.google/go/x/tools/+/refs/tags/gopls/v0.15.3:gopls/doc/vim.md
@@ -114,6 +119,14 @@ return {
 		})
 
 		require('lspconfig').biome.setup({
+			capabilities = default_capabilities,
+		})
+
+		require('lspconfig').uiua.setup({
+			capabilities = default_capabilities,
+		})
+
+		require('lspconfig').nim_langserver.setup({
 			capabilities = default_capabilities,
 		})
 
